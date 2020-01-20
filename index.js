@@ -10,16 +10,13 @@ const key = process.env.KEY2;
 const channelId = 'UCvO6uJUVJQ6SrATfsWR5_aA';
 const part = 'snippet';
 const type = 'video';
-const maxResults = 30
-let pageToken = null
+const maxResults = 30;
 
 app.get('/', cors(), (req, res) => {
   fetch(`${url}?key=${key}&channelId=${channelId}&type=${type}&part=${part}&maxResults=${maxResults}`)
   .then(r => r.json())
   .then(json => {
-    pageToken = json.nextPageToken
-    console.log(json)
-    res.json(json)
+    res.json(json);
   });
 });
 
@@ -28,9 +25,7 @@ app.get('/page/:token', cors(), (req, res) => {
   fetch(`${url}?key=${key}&channelId=${channelId}&type=${type}&part=${part}&maxResults=${maxResults}&pageToken=${token}`)
   .then(r => r.json())
   .then(json => {
-    pageToken = json.nextPageToken
-    console.log(json)
-    res.json(json)
+    res.json(json);
   });
 });
 
