@@ -12,7 +12,12 @@ const part = 'snippet';
 const type = 'video';
 const maxResults = 30;
 
-app.get('/', cors(), (req, res) => {
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
+app.get('/', (req, res) => {
   fetch(`${url}?key=${key}&channelId=${channelId}&type=${type}&part=${part}&maxResults=${maxResults}`)
   .then(r => r.json())
   .then(json => {
@@ -20,7 +25,7 @@ app.get('/', cors(), (req, res) => {
   });
 });
 
-app.get('/page/:token', cors(), (req, res) => {
+app.get('/page/:token', (req, res) => {
   const token = req.params.token
   fetch(`${url}?key=${key}&channelId=${channelId}&type=${type}&part=${part}&maxResults=${maxResults}&pageToken=${token}`)
   .then(r => r.json())
